@@ -46,9 +46,9 @@ namespace ExampleBot
             _discordClient = new DiscordClient(config);
 
             // event drivent methods. Discord client will raise this event and call the attached function - https://docs.microsoft.com/en-us/dotnet/api/system.eventhandler?view=netcore-3.1
-            _discordClient.MessageCreated += DiscordClient_MessageCreated;
+            _discordClient.MessageCreated += ProcessingFunctions.DiscordClient_MessageCreated;
             // just an event to test its working . You would use this event to do things that require knowing the channesl (guilds) that are connected 
-            _discordClient.GuildDownloadCompleted += DiscordClient_GuildDownloadCompleted;
+            _discordClient.GuildDownloadCompleted += ProcessingFunctions.DiscordClient_GuildDownloadCompleted;
 
             // connect to discord
             await _discordClient.ConnectAsync();
@@ -84,16 +84,6 @@ namespace ExampleBot
             await Task.Delay(-1);
         }
 
-        private static async Task DiscordClient_GuildDownloadCompleted(DiscordClient sender, DSharpPlus.EventArgs.GuildDownloadCompletedEventArgs e)
-        {
-            // if you have allowed your bot correctly - you should see an ulong here
-            Console.WriteLine($"Connected guilds : {string.Join(",", e.Guilds.Keys)}");
-        }
-
-        private static async Task DiscordClient_MessageCreated(DiscordClient sender, DSharpPlus.EventArgs.MessageCreateEventArgs e)
-        {
-            // output the data we got from discord to console log
-            Console.WriteLine($"{e.Author.Username}: {e.Message.Content}");
-        }
+      
     }
 }
